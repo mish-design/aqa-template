@@ -1,0 +1,37 @@
+image: python:3.10
+
+stages:
+  - test
+
+test_job:
+  stage: test
+  script:
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+    # Если нужно, установите драйверы (ChromeDriver, GeckoDriver) вручную
+    # или используйте Docker-образ с уже установленными драйверами.
+
+    # Запуск тестов с выводом Allure-результатов
+    - pytest --alluredir=allure-results
+
+  artifacts:
+    paths:
+      - allure-results
+    when: always
+
+
+#Пояснения
+# image: python:3.10
+# Это стандартный Python-образ. Если вы хотите, чтобы Selenium (или драйверы) были уже предустановлены, можно использовать кастомный образ (или скачать драйверы в ходе сборки).
+# pip install -r requirements.txt
+# У вас в requirements.txt должны быть, например, selenium, pytest, allure-pytest и т.д.
+# Установка браузеров/драйверов
+# Чаще всего, чтобы использовать Selenium, нужен chromedriver и установленный сам Chrome/Chromium. Можно добавить команды:
+# yaml
+#- apt-get update
+#- apt-get install -y chromium-browser chromium-chromedriver
+# Или использовать Docker-образ с уже включенным браузером и драйвером (например, SeleniumHQ опубликовал официальный образ).
+# pytest --alluredir=allure-results
+# Сохраняем результаты в папку allure-results, чтобы можно было потом сгенерировать отчёт.
+# artifacts
+# Аналогично Playwright-варианту, сохраняем allure-results как артефакт.

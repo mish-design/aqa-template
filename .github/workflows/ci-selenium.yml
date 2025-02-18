@@ -2,9 +2,9 @@ name: CI (Selenium)
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "disable-actions" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "disable-actions" ]  # поменять на "main", сделано, чтобы не трегирился экшн
 
 jobs:
   build-and-test:

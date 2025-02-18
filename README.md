@@ -47,3 +47,12 @@ pytest tests/
 т.е. все модули, которые должны быть установлены (например, pytest, playwright, requests и т.д.).
 - tests/: здесь лежат файлы с тестами (например, test_login.py, test_registration.py и т.д.).
 - pages/: если используете Page Object Model, здесь можно хранить классы-обёртки для ваших страниц (LoginPage, HomePage).
+
+## Инструкция по настройке CI
+
+Подробное описание процесса настройки CI доступно по ссылке:
+[Настройка CI (базовая)](https://www.notion.so/mishdesign/CI-39242d3e2cac41b3b45ec13624362958)
+
+Чтобы тесты запускались в GitHub Action используй один из фалов .yml в папке .github/workflows/
+
+Если тесты на будут на GitLab, то .yml брать в корне проекта (там два под playwright и под Selenium)

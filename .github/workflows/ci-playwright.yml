@@ -2,9 +2,9 @@ name: CI (Playwright)
 
 on:
   push:
-    branches: [ "main" ] # Укажите, при пуше в какие ветки запускать
+    branches: [ "disable-actions" ] # Укажите, при пуше в какие ветки запускать, поменять на "main", сделано, чтобы не трегирился экшн
   pull_request:
-    branches: [ "main" ] # При создании Pull Request в ветку main
+    branches: [ "disable-actions" ] # При создании Pull Request в ветку main
 
 jobs:
   build-and-test:

@@ -1,0 +1,34 @@
+image: mcr.microsoft.com/playwright/python:latest
+
+stages:
+  - test
+
+test_job:
+  stage: test
+  script:
+    # Обновим pip и поставим все нужные пакеты из requirements.txt
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+    # Официальный образ уже содержит браузеры,
+    # но при необходимости можно повторно:
+    #- playwright install
+
+    # Запуск тестов с выводом Allure-результатов
+    - pytest --alluredir=allure-results
+
+  artifacts:
+    paths:
+      - allure-results
+    when: always
+
+
+#Пояснения
+# image: mcr.microsoft.com/playwright/python:latest
+# Это официальный Docker-образ Playwright для Python, уже включает необходимые браузеры (Chromium, Firefox, WebKit) и Python-среду.
+# pip install -r requirements.txt
+# Если у вас есть дополнительные библиотеки (pytest, requests, allure-pytest), они установятся отсюда.
+# pytest --alluredir=allure-results
+# Генерируем сырые результаты для Allure. В случае необходимости можно на следующей стадии собрать HTML-отчёт (Allure generate).
+# artifacts
+# Папка allure-results будет сохранена как артефакт и доступна для скачивания в GitLab UI (Jobs → test_job → Browse).
+# when: always означает, что артефакты сохранятся даже при упавших тестах.
