@@ -1,0 +1,39 @@
+name: CI (Playwright)
+
+on:
+  push:
+    branches: [ "main" ] # Укажите, при пуше в какие ветки запускать
+  pull_request:
+    branches: [ "main" ] # При создании Pull Request в ветку main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest # в миш используем свой
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          # Установка браузеров Playwright (если нужно)
+          playwright install
+
+      - name: Run tests
+        run: |
+          # Запускаем pytest и генерируем allure-артефакты
+          pytest --alluredir=allure-results
+          
+          # Запускаем pytest и генерируем allure-артефакты
+      - name: Upload Allure results
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-results
+          path: allure-results
